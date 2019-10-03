@@ -34,7 +34,7 @@ public class MarketValueServiceImpl implements MarketValueService {
 	 * @return stock value
 	 */
 	private BigDecimal getValueForAStock(Stock stock) {
-		if (stock.getExchange().getCurrency() != stock.getAccount().getBaseCurrency())
+		if (stock.getExchange().getCurrency() == stock.getAccount().getBaseCurrency())
 			return new BigDecimal(stock.getQuantity()).multiply(pricingService.getStockPrice(stock.getSymbol()));
 		else
 			return new BigDecimal(stock.getQuantity()).multiply(pricingService.getStockPrice(stock.getSymbol()))
