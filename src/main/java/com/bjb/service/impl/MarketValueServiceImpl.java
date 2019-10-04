@@ -3,6 +3,7 @@ package com.bjb.service.impl;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bjb.dto.Account;
 import com.bjb.dto.Stock;
@@ -11,6 +12,7 @@ import com.bjb.service.ForexService;
 import com.bjb.service.MarketValueService;
 import com.bjb.service.PricingService;
 
+@Service
 public class MarketValueServiceImpl implements MarketValueService {
 
 	@Autowired
@@ -34,11 +36,13 @@ public class MarketValueServiceImpl implements MarketValueService {
 	 * @return stock value
 	 */
 	private BigDecimal getValueForAStock(Stock stock) {
-		if (stock.getExchange().getCurrency() == stock.getAccount().getBaseCurrency())
-			return new BigDecimal(stock.getQuantity()).multiply(pricingService.getStockPrice(stock.getSymbol()));
-		else
+		if (stock.getExchange().getCurrency() == stock.getAccount().getBaseCurrency()) {
+			return new BigDecimal(stock.getQuantity()).multiply(pricingService.getStockPrice(stock.getSymbol())).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		}
+		else {
 			return new BigDecimal(stock.getQuantity()).multiply(pricingService.getStockPrice(stock.getSymbol()))
 					.multiply(forexService.getExchangeRate(stock.getExchange().getCurrency().toString(),
-							stock.getAccount().getBaseCurrency().toString()));
+							stock.getAccount().getBaseCurrency().toString())).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		}
 	}
 }

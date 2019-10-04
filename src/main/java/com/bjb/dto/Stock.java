@@ -23,7 +23,7 @@ public class Stock {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "account_id")
+	@Column(name = "stock_id")
 	long stockId;
 
 	@Column(name = "symbol")
@@ -36,7 +36,7 @@ public class Stock {
 	Exchange exchange;
 
 	@ManyToOne
-	@JoinColumn(name = "account")
+	@JoinColumn(name = "account_id")
 	Account account;
 
 	public long getStockId() {

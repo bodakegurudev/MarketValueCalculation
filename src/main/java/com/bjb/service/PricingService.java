@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
  * @author Santosh K.
  *
  */
-@Service
 public interface PricingService {
 	public BigDecimal getStockPrice(String symbol);
 }
